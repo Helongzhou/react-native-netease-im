@@ -76,6 +76,8 @@ public class LoginService {
     }
 
     public void login(final LoginInfo loginInfoP, final RequestCallback<LoginInfo> callback) {
+        //关闭消息推送
+        NIMClient.toggleNotification(false);
         loginInfoFuture = NIMClient.getService(AuthService.class).login(loginInfoP);
         loginInfoFuture.setCallback(new RequestCallback<LoginInfo>() {
             @Override

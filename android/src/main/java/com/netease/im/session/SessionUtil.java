@@ -126,28 +126,19 @@ public class SessionUtil {
             if (!TextUtils.isEmpty(content)) {
                 JSONObject object = JSON.parseObject(content);
                 JSONObject data = object.getJSONObject("data");
-
-                JSONObject dict = data.getJSONObject("dict");
-                String sendId = dict.getString("sendId");
-                String openId = dict.getString("openId");
-                String hasRedPacket = dict.getString("hasRedPacket");
-                String serialNo = dict.getString("serialNo");
-
-//                String timestamp = data.getString("timestamp");
-                long t = customNotification.getTime() / 1000;
-//                try {
-//                    t = Long.parseLong(timestamp);
-//                } catch (NumberFormatException e) {
-//                    t = System.currentTimeMillis() / 1000;
-//                    e.printStackTrace();
-//                }
-//                LogUtil.w("timestamp","timestamp:"+timestamp);
-//                LogUtil.w("timestamp","t:"+t);
-//                LogUtil.w("timestamp",""+data);
-                String sessionId = data.getString("sessionId");
-                String sessionType = data.getString("sessionType");
-                final String id = sessionId;//getSessionType(sessionType) == SessionTypeEnum.P2P ? openId :
-                sendRedPacketOpenLocal(id, getSessionType(sessionType), sendId, openId, hasRedPacket, serialNo, t);
+                //非空处理
+                if(data!=null){
+                  JSONObject dict = data.getJSONObject("dict");
+                  String  sendId = dict.getString("sendId");
+                  String  openId = dict.getString("openId");
+                  String  hasRedPacket = dict.getString("hasRedPacket");
+                  String  serialNo = dict.getString("serialNo");
+                  long t = customNotification.getTime() / 1000;
+                  String sessionId = data.getString("sessionId");
+                  String sessionType = data.getString("sessionType");
+                  final String id = sessionId;
+                  sendRedPacketOpenLocal(id, getSessionType(sessionType), sendId, openId, hasRedPacket, serialNo, t);
+                }
             }
         }
 
